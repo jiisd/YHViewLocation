@@ -9,17 +9,60 @@
 
 @interface UIView (YHLocation)
 
-@property (assign,nonatomic) CGFloat frameX;
-@property (assign,nonatomic) CGFloat frameY;
-@property (assign,nonatomic) CGFloat frameW;
-@property (assign,nonatomic) CGFloat frameH;
+/******************************************************
+ * Shortcut for frame
+ */
 
-@property (assign,nonatomic) CGFloat boundsX;
-@property (assign,nonatomic) CGFloat boundsY;
-@property (assign,nonatomic) CGFloat boundsW;
-@property (assign,nonatomic) CGFloat boundsH;
+/** Shortcut for frame.origin.x */
+@property (nonatomic, assign) CGFloat frameX;
+/** Shortcut for frame.origin.y */
+@property (nonatomic, assign) CGFloat frameY;
+/** Shortcut for frame.size.width */
+@property (nonatomic, assign) CGFloat frameW;
+/** Shortcut for frame.size.height */
+@property (nonatomic, assign) CGFloat frameH;
+/** Shortcut for frame.origin */
+@property (nonatomic, assign) CGPoint origin;
+/** Shortcut for rame.size */
+@property (nonatomic, assign) CGSize size;
 
-@property (assign,nonatomic) CGFloat centerX;
-@property (assign,nonatomic) CGFloat centerY;
+/******************************************************
+ * Shortcut for bounds
+ */
+
+/** Shortcut for bounds.origin.x */
+@property (nonatomic, assign) CGFloat boundsX;
+/** Shortcut for bounds.origin.y */
+@property (nonatomic, assign) CGFloat boundsY;
+/** Shortcut for bounds.size.width */
+@property (nonatomic, assign) CGFloat boundsW;
+/** Shortcut for bounds.size.height */
+@property (nonatomic, assign) CGFloat boundsH;
+
+/******************************************************
+ * Shortcut for center
+ */
+
+/** Shortcut for center.x */
+@property (nonatomic, assign) CGFloat centerX;
+/** Shortcut for center.y */
+@property (nonatomic, assign) CGFloat centerY;
+
+/******************************************************
+ * Shortcut like CSS
+ */
+
+/** Shortcut for frame.origin.x */
+@property (nonatomic, assign) CGFloat left;
+/** Shortcut for frame.origin.y */
+@property (nonatomic, assign) CGFloat top;
+/** Shortcut for frame.origin.x + frame.size.width */
+@property (nonatomic, assign) CGFloat right;
+/** Shortcut for frame.origin.y + frame.size.height */
+@property (nonatomic, assign) CGFloat bottom;
+/** Shortcut for frame.size.width */
+@property (nonatomic, assign) CGFloat width;
+/** Shortcut for frame.size.width */
+@property (nonatomic, assign) CGFloat height;
 
 @end

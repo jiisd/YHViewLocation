@@ -9,50 +9,129 @@
 #import "ViewController.h"
 #import "UIView+YHLocation.h"
 
+NSInteger const kUpBtnTag        = 1001;
+NSInteger const kLeftBtnTag      = 1002;
+NSInteger const kRightBtnTag     = 1003;
+NSInteger const kDownBtnTag      = 1004;
+
+NSInteger const btnCenterMargin  = 70;
+
 @interface ViewController ()
 
+@property (nonatomic, strong) UIButton *upBtn;
+@property (nonatomic, strong) UIButton *leftBtn;
+@property (nonatomic, strong) UIButton *rightBtn;
 @property (nonatomic, strong) UIButton *downBtn;
+
 @property (nonatomic, strong) UIView *redView;
 
 @end
 
 @implementation ViewController
 
+#pragma mark - lifeCycle
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    // add subViews
     [self setupUI];
 }
 
+#pragma mark - privateMethods
 - (void)setupUI {
+    [self.view addSubview:self.upBtn];
+    [self.view addSubview:self.leftBtn];
+    [self.view addSubview:self.rightBtn];
     [self.view addSubview:self.downBtn];
+    
     [self.view addSubview:self.redView];
 }
 
-- (void)down {
+- (UIButton *)getBtnWithTag:(NSInteger)tag title:(NSString *)title {
+    UIButton *btn = [[UIButton alloc]init];
+    btn.tag = tag;
+    btn.size = CGSizeMake(50, 40);
+    [btn setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
+    [btn setBackgroundColor:[UIColor lightGrayColor]];
+    [btn setTitle:title forState:UIControlStateNormal];
+    [btn addTarget:nil action:@selector(moveBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     
-    self.redView.frameY += 50;
+    return btn;
+}
+
+#pragma mark - actionMethods
+- (void)moveBtnAction:(UIButton *)btn {
+    CGPoint moveToPoint;
     
-    if (CGRectGetMaxY(self.redView.frame) >= [UIScreen mainScreen].bounds.size.height) {
-        self.redView.frameY = [UIScreen mainScreen].bounds.size.height - self.redView.boundsH;
-        NSLog(@"已经到底了哦。。。");
-    }
+//    // some action
+//    NSInteger btnTag = btn.tag;
+//    switch (btnTag) {
+//        case kUpBtnTag:
+//            
+//            break;
+//            
+//        case kLeftBtnTag:
+//            
+//            break;
+//            
+//        case kRightBtnTag:
+//            
+//            break;
+//            
+//        case kDownBtnTag:
+//            
+//            break;
+//    }
+    
+    moveToPoint = btn.center;
+    
+    [UIView animateWithDuration:0.5 delay:0.0 usingSpringWithDamping:0.4 initialSpringVelocity:1.0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        
+        self.redView.center = moveToPoint;
+        
+    } completion:^(BOOL finished) {
+        
+        [UIView animateWithDuration:0.2 animations:^{
+            self.redView.center = self.view.center;
+        } completion:nil];
+        
+    }];
     
 }
 
-#pragma mark - 懒加载
+#pragma mark - getter
+- (UIButton *)upBtn {
+    if (!_upBtn) {
+        _upBtn = [self getBtnWithTag:kUpBtnTag title:@"up"];
+        _upBtn.centerX = self.view.centerX;
+        _upBtn.bottom = self.view.centerY - btnCenterMargin;
+    }
+    return _upBtn;
+}
+
+- (UIButton *)leftBtn {
+    if (!_leftBtn) {
+        _leftBtn = [self getBtnWithTag:kLeftBtnTag title:@"left"];
+        _leftBtn.centerY = self.view.centerY;
+        _leftBtn.right = self.view.centerX - btnCenterMargin;
+    }
+    return _leftBtn;
+}
+
+- (UIButton *)rightBtn {
+    if (!_rightBtn) {
+        _rightBtn = [self getBtnWithTag:kRightBtnTag title:@"right"];
+        _rightBtn.centerY = self.view.centerY;
+        _rightBtn.left = self.view.centerX + btnCenterMargin;
+    }
+    return _rightBtn;
+}
 
 - (UIButton *)downBtn {
     if (!_downBtn) {
-        _downBtn = [[UIButton alloc]init];
-        _downBtn.frameY = 60;
-        _downBtn.boundsW = 100;
-        _downBtn.boundsH = 40;
+        _downBtn = [self getBtnWithTag:kDownBtnTag title:@"down"];
         _downBtn.centerX = self.view.centerX;
-        [_downBtn setTitle:@"向下" forState:UIControlStateNormal];
-        [_downBtn setTitleColor:[UIColor redColor] forState:UIControlStateHighlighted];
-        [_downBtn setBackgroundColor:[UIColor lightGrayColor]];
-        [_downBtn addTarget:self action:@selector(down) forControlEvents:UIControlEventTouchUpInside];
+        _downBtn.top = self.view.centerY + btnCenterMargin;
     }
     return _downBtn;
 }
@@ -60,10 +139,9 @@
 -(UIView *)redView {
     if (!_redView) {
         _redView = [[UIView alloc]init];
-        _redView.frameY = 100;
-        _redView.frameW = 100;
-        _redView.frameH = 100;
-        _redView.centerX = self.downBtn.centerX;
+        _redView.frameW = 50;
+        _redView.frameH = 50;
+        _redView.center = self.view.center;
         _redView.backgroundColor = [UIColor redColor];
     }
     return _redView;

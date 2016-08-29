@@ -9,7 +9,7 @@
 
 @implementation UIView (YHLocation)
 
-//***********************frame***********************//
+//***********************  Frame  ***********************//
 -(CGFloat)frameX{
     return self.frame.origin.x;
 }
@@ -46,7 +46,25 @@
     self.frame = frame;
 }
 
-//***********************bounds***********************//
+- (CGPoint)origin {
+    return self.frame.origin;
+}
+- (void)setOrigin:(CGPoint)origin {
+    CGRect frame = self.frame;
+    frame.origin = origin;
+    self.frame = frame;
+}
+
+- (CGSize)size {
+    return self.frame.size;
+}
+- (void)setSize:(CGSize)size {
+    CGRect frame = self.frame;
+    frame.size = size;
+    self.frame = frame;
+}
+
+//***********************  Bounds  ***********************//
 -(CGFloat)boundsX{
     return self.bounds.origin.x;
 }
@@ -77,14 +95,13 @@
 -(CGFloat)boundsH{
     return self.bounds.size.height;
 }
-
 -(void)setBoundsH:(CGFloat)boundsH{
     CGRect bounds = self.bounds;
     bounds.size.height = boundsH;
     self.bounds = bounds;
 }
 
-//***********************center***********************//
+//***********************  Center  ***********************//
 -(CGFloat)centerX{
     return self.center.x;
 }
@@ -102,4 +119,53 @@
     center.y = centerY;
     self.center = center;
 }
+
+//***********************  Left  ***********************//
+- (CGFloat)left {
+    return self.frameX;
+}
+- (void)setLeft:(CGFloat)x {
+    self.frameX = x;
+}
+
+//***********************  Top  ***********************//
+- (CGFloat)top {
+    return self.frameY;
+}
+- (void)setTop:(CGFloat)y {
+    self.frameY = y;
+}
+
+//***********************  Right  ***********************//
+- (CGFloat)right {
+    return self.frameX + self.frameW;
+}
+- (void)setRight:(CGFloat)right {
+    self.frameX = right - self.frameW;
+}
+
+//***********************  Bottom  ***********************//
+- (CGFloat)bottom {
+    return self.frameY + self.frameH;
+}
+- (void)setBottom:(CGFloat)bottom {
+    self.frameY = bottom - self.frameH;
+}
+
+//***********************  Width  ***********************//
+- (CGFloat)width {
+    return self.frameW;
+}
+- (void)setWidth:(CGFloat)width {
+    self.frameW = width;
+}
+
+//***********************  Height  ***********************//
+- (CGFloat)height {
+    return self.frameH;
+}
+- (void)setHeight:(CGFloat)height {
+    self.frameH = height;
+}
+
 @end
